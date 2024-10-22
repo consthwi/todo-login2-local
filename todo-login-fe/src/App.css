@@ -1,0 +1,11 @@
+body {
+  background: url("./assets/todo_bg_lg.jpg") no-repeat center/cover;
+  height: 100vh;
+  color: salmon;
+}
+
+@media(max-width: 768px){
+  body {
+    background: url("./assets/todo_bg_sm.jpg") no-repeat center/cover;
+  }
+}
