@@ -57,7 +57,7 @@ const TodoBoard = ({ todoList, toggleComplete, deleteItem }) => {
       </TodoBoardSide>
       <TodoBoardWrapper>
         <TodoBoardTitle>
-          {todoList.length > 0 ? "Todo List" : "White Your Todo!"}
+          {todoList.length > 0 ? "Todo List" : "Write Your Todo!"}
         </TodoBoardTitle>
         {todoList.length > 0 ? (
           todoList.map((item, idx) => {

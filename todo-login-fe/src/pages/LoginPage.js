@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 import TodoContainer from "../components/common/TodoContainer";
 import api from "../utils/api";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const LoginContainer = styled("div")(() => ({
   padding: "2rem",
@@ -99,11 +99,10 @@ const LoginJoinWrapper = styled("div")(() => ({
   },
 }));
 
-const LoginPage = () => {
+const LoginPage = ({ user, setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [user, setUser] = useState(null);
   const [focusedField, setFocusedField] = useState("");
 
   const navigate = useNavigate();
@@ -132,6 +131,10 @@ const LoginPage = () => {
       setError(error.message);
     }
   };
+
+  if (user) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <TodoContainer

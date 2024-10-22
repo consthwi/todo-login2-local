@@ -4,8 +4,14 @@ import styled from "@emotion/styled";
 import api from "../utils/api";
 import TodoContainer from "../components/common/TodoContainer";
 import TodoBoard from "../components/TodoBoard";
+import { useNavigate } from "react-router-dom";
 
 // style-component start
+
+const TodoHeader = styled("div")(() => ({
+  position: "relative",
+}));
+
 const TodoTitle = styled("h1")(() => ({
   fontSize: "2rem",
   color: "salmon",
@@ -41,17 +47,33 @@ const TodoButton = styled(Button)(() => ({
   fontSize: "1rem",
   padding: "0.1rem",
   border: "none",
-  boxShadow: "#e07368 1px 1px 3px",
   color: "#fff",
   backgroundColor: "#e07368",
   "&:hover": { backgroundColor: "salmon", color: "#fff" },
   "@media(max-width:900px)": { fontSize: "0.8rem" },
 }));
+
+const LogoutButton = styled(Button)(() => ({
+  color: "salmon",
+  fontFamily: "Agdasima",
+  fontSize: "1rem",
+  fontWeight: "bold",
+  position: "absolute",
+  right: 0,
+  top: 0,
+  transition: "0.1s transform",
+  "&:hover": {
+    backgroundColor: "transparent",
+    transform: "translateY(-3px)",
+    color: "red",
+  },
+}));
 // style-component end
 
-const TodoPage = () => {
+const TodoPage = ({ setUser }) => {
   const [todoList, setTodoList] = useState([]);
   const [todoValue, setTodoValue] = useState("");
+  const navigate = useNavigate();
 
   const getTasks = async () => {
     const res = await api.get("/tasks");
@@ -95,13 +117,22 @@ const TodoPage = () => {
     }
   };
 
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    setUser(null);
+    navigate("/login");
+  };
+
   useEffect(() => {
     getTasks();
   }, []);
 
   return (
     <TodoContainer>
-      <TodoTitle>Todo-App</TodoTitle>
+      <TodoHeader>
+        <TodoTitle>Todo-App</TodoTitle>
+        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+      </TodoHeader>
       <TodoText container spacing={{ xs: 1, md: 2 }}>
         <Grid2 size={{ xs: 12, md: 10 }}>
           <TodoInput
